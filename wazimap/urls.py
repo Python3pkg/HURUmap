@@ -10,7 +10,7 @@ from census.views import HealthcheckView, DataView, ExampleView
 
 from wazimap.views import (HomepageView, GeographyDetailView, GeographyJsonView, PlaceSearchJson,
                            LocateView, DataAPIView, TableAPIView, AboutView, GeographyCompareView,
-                           GeoAPIView, TableDetailView)
+                           GeoAPIView, TableDetailView, HowitworksView, TopicsView)
 
 
 admin.autodiscover()
@@ -34,6 +34,18 @@ urlpatterns = patterns('',
         kwargs  = {},
         name    = 'about',
     ),
+    url(
+        regex='^howitworks$',
+        view=cache_page(STANDARD_CACHE_TIME)(HowitworksView.as_view()),
+        kwargs={},
+        name='howitworks',
+   ),
+   url(
+       regex='^topics$',
+       view=cache_page(STANDARD_CACHE_TIME)(TopicsView.as_view()),
+       kwargs={},
+       name='topics',
+   ),
 
     # e.g. /profiles/province-GT/
     url(
