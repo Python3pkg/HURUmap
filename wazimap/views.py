@@ -41,6 +41,9 @@ class GeographyDetailView(BaseGeographyDetailView):
 
     def dispatch(self, *args, **kwargs):
         self.geo_id = self.kwargs.get('geography_id', None)
+        print self.kwargs
+        print self.args
+        print '--'
 
         try:
             self.geo_level, self.geo_code = self.geo_id.split('-', 1)
