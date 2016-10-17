@@ -269,7 +269,7 @@ class AboutView(TemplateView):
     template_name = 'about.html'
 
     def get_context_data(self):
-        return {'about': true}
+        return {'about': True}
 
 
 class HowitworksView(TemplateView):
