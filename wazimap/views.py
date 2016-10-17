@@ -267,14 +267,26 @@ class TableAPIView(View):
 class AboutView(TemplateView):
     template_name = 'about.html'
 
+    def get_context_data(self):
+        return {'about': True}
+
 class HowitworksView(TemplateView):
     template_name = 'howitworks.html'
+
+    def get_context_data(self):
+        return {'howitworks_page': True}
 
 class TopicsView(TemplateView):
     template_name = 'topics.html'
 
+    def get_context_data(self):
+        return {'topics_page': True}
+
 class ShowcaseView(TemplateView):
     template_name = 'showcase.html'
+
+    def get_context_data(self):
+        return {'showcase_page': True}
 
 class CommunityView(TemplateView):
     template_name = 'community.html'
