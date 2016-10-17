@@ -270,17 +270,21 @@ class AboutView(TemplateView):
     def get_context_data(self):
         return {'about': True}
 
+
 class HowitworksView(TemplateView):
     template_name = 'howitworks.html'
 
     def get_context_data(self):
         return {'howitworks_page': True}
 
+
 class TopicsView(TemplateView):
     template_name = 'topics.html'
 
-    def get_context_data(self):
-        return {'topics_page': True}
+    def get_context_data(self, *args, **kwargs):
+        topics = settings.WAZIMAP.get('topics', None)
+        return {'topics_page': True, 'topics': topics}
+
 
 class ShowcaseView(TemplateView):
     template_name = 'showcase.html'
@@ -288,8 +292,10 @@ class ShowcaseView(TemplateView):
     def get_context_data(self):
         return {'showcase_page': True}
 
+
 class CommunityView(TemplateView):
     template_name = 'community.html'
+
 
 class GeographyCompareView(TemplateView):
     template_name = 'profile/head2head.html'
