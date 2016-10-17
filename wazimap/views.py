@@ -276,6 +276,8 @@ class TopicsView(TemplateView):
 class ShowcaseView(TemplateView):
     template_name = 'showcase.html'
 
+class CommunityView(TemplateView):
+    template_name = 'community.html'
 
 class GeographyCompareView(TemplateView):
     template_name = 'profile/head2head.html'
