@@ -282,8 +282,7 @@ class TopicsView(TemplateView):
     template_name = 'topics.html'
 
     def get_context_data(self, *args, **kwargs):
-        topics = settings.WAZIMAP.get('topics', None)
-        return {'topics_page': True, 'topics': topics}
+        return {'topics_page': True, 'topics': settings.WAZIMAP.get('topics', None)}
 
 
 class ShowcaseView(TemplateView):
