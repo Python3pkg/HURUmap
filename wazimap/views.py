@@ -33,6 +33,7 @@ class HomepageView(TemplateView):
     def get_context_data(self, *args, **kwargs):
         return {
             'root_geo': geo_data.root_geography(),
+            'topics': settings.WAZIMAP.get('topics', None)
         }
 
 
@@ -268,7 +269,7 @@ class AboutView(TemplateView):
     template_name = 'about.html'
 
     def get_context_data(self):
-        return {'about': True}
+        return {'about': true}
 
 
 class HowitworksView(TemplateView):
@@ -282,7 +283,10 @@ class TopicsView(TemplateView):
     template_name = 'topics.html'
 
     def get_context_data(self, *args, **kwargs):
-        return {'topics_page': True, 'topics': settings.WAZIMAP.get('topics', None)}
+        return {
+            'topics_page': True,
+            'topics': settings.WAZIMAP.get('topics', {})
+        }
 
 
 class ShowcaseView(TemplateView):
