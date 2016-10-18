@@ -307,6 +307,7 @@ class GeographyCompareView(TemplateView):
         page_context = {
             'geo_id1': geo_id1,
             'geo_id2': geo_id2,
+            'compare_view': True,
         }
 
         try:
