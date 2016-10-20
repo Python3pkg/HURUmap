@@ -54,6 +54,8 @@ class GeographyDetailView(BaseGeographyDetailView):
             if kwargs['slug'] != self.geo.slug:
                 kwargs['slug'] = self.geo.slug
                 url = '/profiles/%s-%s-%s' % (self.geo_level, self.geo_code, self.geo.slug)
+                topic = self.request.GET.get('topic', None)
+                if topic: url += '?topic=' + topic
                 return redirect(url, permanent=True)
 
         # Skip the parent class's logic completely and go back to basics
