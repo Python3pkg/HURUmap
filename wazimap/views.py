@@ -307,7 +307,6 @@ class GeographyCompareView(TemplateView):
         page_context = {
             'geo_id1': geo_id1,
             'geo_id2': geo_id2,
-            'compare_view': True,
         }
 
         try:
@@ -316,6 +315,8 @@ class GeographyCompareView(TemplateView):
 
             level, code = geo_id2.split('-', 1)
             page_context['geo2'] = geo_data.get_geography(code, level)
+            topic = self.request.GET.get('topic', None)
+            if topic: page_context['get_params'] = '?topic=' + topic
         except (ValueError, LocationNotFound):
             raise Http404
 
