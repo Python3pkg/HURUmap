@@ -33,7 +33,7 @@ class HomepageView(TemplateView):
     def get_context_data(self, *args, **kwargs):
         return {
             'root_geo': geo_data.root_geography(),
-            'topics': dict(settings.WAZIMAP.get('topics', None))
+            'topics': dict(settings.WAZIMAP.get('topics', {}))
         }
 
 
