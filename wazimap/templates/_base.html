@@ -14,6 +14,8 @@
         <link rel="stylesheet" href="{{ STATIC_URL }}css/vendor/normalize.min.css">
         <link rel="stylesheet" href="{% static 'css/app.css' %}">
         <link rel="stylesheet" href="{% static 'css/wazimap.css' %}">
+        <link href="https://fonts.googleapis.com/css?family=Lato|Poppins" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
         {% block head_css_extra %}{% endblock %}{% endblock head_css %}
         {% block head_javascript %}
         <script src="//cdn.jsdelivr.net/g/modernizr@2.7,respond@1.4"></script>
@@ -32,9 +34,7 @@
 
         </script>
         <!-- End Google Analytics -->
-        {% block favicon %}
         <link rel="shortcut icon" href="{{ STATIC_URL }}img/icons/favicon.ico" />
-        {% endblock favicon %}
         <link rel="apple-touch-icon-precomposed" href="{{ STATIC_URL }}img/icons/touch-icon-144x144.png" sizes="144x144" />
         {% block head_facebook_tags %}{% endblock %}
         {% block head_twitter_tags %}{% endblock %}
@@ -53,16 +53,25 @@
                 <i id="menu-toggle" class="fa fa-bars"></i>
                 {% endif %}
                 <a class="title" href="{% url 'homepage' %}">
-                    {% block header_logo %}
-                    <img src="{% static 'img/wazi-logo.png' %}">
-                    {% endblock %}
-                    {{ WAZIMAP.name }}
+                    <img src="{% static 'img/wazimap-kenya-logo.png' %}">
                 </a>
                 {% if not hide_nav_tools %}
                     {% block nav_tools %}
                     <div id="menu" class="tool-set clearfix">
                         <div class="tool-group">
-                            <input name="geography_select" id="geography-select" type="text" placeholder="Start typing a place name or address..." autocomplete="off">
+                            <a href="/about" {%if about %} class="active"{%endif%}>About WAZImap {{about}}</a>
+                        </div>
+                        <div class="tool-group">
+                            <a href="/howitworks" {%if howitworks%} class="active"{%endif%}>How WAZImap Works</a>
+                        </div>
+                        <div class="tool-group">
+                            <a href="/topics" {%if topics%} class="active"{%endif%}>Topics</a>
+                        </div>
+                        <div class="tool-group">
+                            <a href="/#page-footer">Contact</a>
+                        </div>
+                        <div class="tool-group search-section">
+                            <input name="geography_select" id="geography-select" type="text" value="Search for a place in Kenya" autocomplete="off" style=" height: 35px;border-radius: 0px;color: #084A49;font-size:16px;">
                         </div>
                         {% if not hide_nav_compare %}
                         {% comment %}
@@ -79,13 +88,11 @@
                     {% endblock %}
                 {% endif %}
                 <div class="header-buttons">
-                    {% if WAZIMAP.twitter %}
-                    <a class="wide-only" href="https://twitter.com/{{ WAZIMAP.twitter }}" title="{{ WAZIMAP.twitter }} on Twitter"><i class="fa fa-2x fa-twitter"></i></a>
-                    {% endif %}
+                    <!--<a class="wide-only" href="https://twitter.com/{{ WAZIMAP.twitter }}" title="{{ WAZIMAP.twitter }} on Twitter"><i class="fa fa-2x fa-twitter"></i></a>-->
                 {% block header_branding %}
-                    <a href="http://www.mediamonitoringafrica.org/" target="_blank">
-                        <img class="mma-logo" src="{% static 'img/mma.png' %}">
-                    </a>
+                    <!--<a href="http://www.mediamonitoringafrica.org/" target="_blank">-->
+                        <!--<img class="mma-logo" src="{% static 'img/mma.png' %}">-->
+                    <!--</a>-->
                 {% endblock %}
                 </div>
             </div>
@@ -99,19 +106,37 @@
         </div>
         {% endblock %}
 
+
+        <div class="content-container clearfix partners">
+            <article class="clearfix wrapper">
+                <section>
+                    <div class="column-quarter callout with-icon" style="width:15%;float:left;">
+                        <p style="margin-top:30px;">Supported by :</p>
+                    </div>
+                    <div class="callout with-icon" style="width:18%;float:left;">
+                        <img src="{% static 'img/cfafrica-logo.png' %}" style="height:80px;">
+                    </div>
+                    <div class="callout with-icon" style="width:31%;float:left;">
+                        <img src="{% static 'img/icfj-logo.png' %}" style="height:80px;">
+                    </div>
+                    <div class="callout with-icon" style="width:18%;float:left;">
+                        <img src="{% static 'img/mma.png' %}" style="height:60px;">
+                    </div>
+                </section>
+            </article>
+        </div>
+
         <footer id="page-footer">
             <section class="wrapper footer-container clearfix">
                 {% block footer_content %}
                 <div class="column-quarter">
                     <ul class="ul-icon-list">
                         <li>
-                            <i class="fa fa-info"></i> <a href="/about">About {{ WAZIMAP.name }}</a>
+                            <i class="fa fa-info"></i> <a href="/about">About Wazimap</a>
                         </li>
-                        {% if WAZIMAP.twitter %}
                         <li>
-                            <i class="fa fa-twitter"></i> <a href="http://twitter.com/{{ WAZIMAP.twitter }}" target="_blank">{{ WAZIMAP.twitter }}</a>
+                            <i class="fa fa-twitter"></i> <a href="http://twitter.com/Wazimap" target="_blank">@Wazimap</a>
                         </li>
-                        {% endif %}
                         <li>
                             <i class="fa fa-pencil"></i> <a href="http://www.newstools.co.za/" target="_blank">More Newstools</a>
                         </li>
@@ -139,7 +164,7 @@
                 <div class="column-quarter">
                     <ul class="ul-icon-list">
                         <li>
-                            <i class="fa fa-github"></i> <a href="https://github.com/Code4SA/wazimap" target="_blank">Wazimap on Github</a>
+                            <i class="fa fa-github"></i> <a href="https://github.com/Code4SA/censusreporter" target="_blank">Wazimap on Github</a>
                         </li>
                         <li>
                             <i class="fa fa-github"></i> Built on <a href="http://censusreporter.org" target="_blank">CensusReporter.org</a>

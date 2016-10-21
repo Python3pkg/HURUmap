@@ -78,9 +78,47 @@
         </article>
     </div>
 </div>
+<section class="clearfix" id="compare-place-picker">
+    <div class="typeahead-container">
+        <input name="place_select" id="compare-place-select" type="text" value="" autocomplete="off"/>
+        <button>GO</button>
+    </div>
+</section>
 {% endblock %}
 
 {% block content %}
+<section class="filters">
+    <div class="filter-row">
+        <a herf="#"><i>Filter results</i></a>
+        <a herf="#" class="hide-filters"><i>Hide filters</i></a>
+    </div>
+    {% for key, values in all_sections.items %}
+    <div class="filter-row" data-filter="{{key}}">
+        <i class="fa {{values.icon}}"></i>  {{values.topic|title}}
+        <span class="end">+</span>
+    </div>
+    <!--<div class="filter-row-sub {{key}}-sub">-->
+        <!--<span>All</span>-->
+        <!--{% if key in selected_topics %}-->
+        <!--<div class="box-checked"></div>-->
+        <!--{% else %}-->
+        <!--<div class="box-unchecked"></div>-->
+        <!--{% endif %}-->
+    <!--</div>-->
+    {% for topic in values.profiles %}
+    <div class="filter-row-sub {{key}}-sub">
+        <span>{{topic|title}}</span>
+        {% if topic in raw_selected_sections %}
+        <div class="box-checked" data-filter="{{topic}}"></div>
+        {% else %}
+        <div class="box-unchecked" data-filter="{{topic}}"></div>
+        {% endif %}
+    </div>
+    {% endfor %}
+    {% endfor %}
+</section>
+
+
 {% comment %}
 <section class="clearfix" id="query-topic-picker">
     <h2>Find data for this place</h2>
@@ -91,32 +129,38 @@
 {% endcomment %}
 
 {% block profile_preamble %}
-<section class="clearfix" id="compare-place-picker">
-    <h2>Compare this place with another</h2>
-    <div class="typeahead-container">
-        <input name="place_select" id="compare-place-select" type="text" placeholder="Start typing a place name or address to compare with..." autocomplete="off">
-    </div>
-</section>
 
-<p class="explain">Interact with charts and statistics for additional information.</p>
+<p class="explain">Interact with charts and statistics for additional information. {{geo_id1}} {{geo_id2}}</p>
 {% endblock %}
 
+<div class="profiles-container">
+    {% block profile_detail %}
+    <article id="example" class="clearfix">
+        <header class="section-contents">
+            <h1>Example</h1>
+        </header>
+        <div class="section-container">
+            <section class="clearfix stat-row">
+                <h2 class="header-for-columns"><a class="permalink" href="#here" id="here">Your stats go here <i class="fa fa-link"></i></a></h2>
+            </section>
 
-{% block profile_detail %}
-<article id="example" class="clearfix">
-    <header class="section-contents">
-        <h1>Example</h1>
-    </header>
-    <div class="section-container">
+        </div>
+    </article>
+    {% endblock profile_detail %}
+</div>
 
-        <section class="clearfix stat-row">
-            <h2 class="header-for-columns"><a class="permalink" href="#here" id="here">Your stats go here <i class="fa fa-link"></i></a></h2>
-        </section>
-
-    </div>
-</article>
-{% endblock profile_detail %}
-
+{% if not compare_view %}
+<br clear="all">
+<!-- suggest a dataset section -->
+<center>
+    <article id="suggestdata" class="clearfix">
+        <div class="shell">
+            <p>Can't find the data you are looking for or would like to suggest some data to the site?</p>
+            <center><button>Suggest Data</button></center>
+        </div>
+    </article>
+</center>
+{% endif %}
 {% endblock content %}
 
 
@@ -132,7 +176,44 @@
 <script src="{% static 'js/maps_static.js' %}"></script>
 <script src="{% static 'js/profile_map.js' %}"></script>
 {% endblock %}
+<script>
+     if (! $('body').hasClass('profile-head2head-frame') ) {
+         w = $( window ).width() - $( '.content-container.wrapper' ).width() - 380;
+         w = Math.round(w/2);
+         $('.content-container.wrapper').css('margin-left', (w + 380) + 'px');
+         $('.filters').css('margin-left', w + 'px');
+         h = $('#slippy-map').height() + $('#page-header').height() + 140
+         $('.filters').css('top', h);
+         $('.filters').css('display', 'block');
+     }
+     $('.wrapper').css('display', 'block');
+     $('#compare-place-select').val('Compare this with another place')
+     $('#compare-place-select').focus(function() {
+        $(this).val('')
+     });
 
+
+
+    //Toogle filters
+     function hide_categories(f) {
+        console.log('hide')
+        $('.' + f + '-sub').css('display', 'none')
+        $('[data-filter='+ f +'] .end').html('+')
+        $('[data-filter='+ f +']').click( function() { f = $(this).attr('data-filter'); $(this).off(); show_categories(f) });
+     }
+
+     function show_categories(f) {
+        console.log('show')
+        $('.' + f + '-sub').css('display', 'block')
+        $('[data-filter='+ f +'] .end').html('-')
+        $('[data-filter='+ f +']').click( function() { f = $(this).attr('data-filter');$(this).off(); hide_categories(f) });
+     }
+     $('.filter-row').click(function() {
+        f = $(this).attr('data-filter')
+        $(this).off()
+        show_categories(f);
+    });
+</script>
 <script type="text/javascript">
 
 // Create all the charts
@@ -269,6 +350,30 @@ if (!!parentLinkContainer) {
             $('body').trigger('glossaryUpdate', parentLinkContainer);
         });
 }
+
+function bind_check_box() {
+    $('.box-checked').click(function(){
+        $(this).removeClass('box-checked')
+        $(this).addClass('box-unchecked')
+        v = $(this).attr('data-filter')
+        v = v.toLowerCase().replace(/ /g, '_')
+        $('#' + v).css('display', 'none')
+        unbind_check_box()
+    });
+}
+function unbind_check_box() {
+    $('.box-unchecked').click(function(){
+        $(this).removeClass('box-unchecked')
+        $(this).addClass('box-checked')
+        v = $(this).attr('data-filter')
+        v = v.toLowerCase().replace(/ /g, '_')
+        $('#' + v).css('display', 'block')
+        bind_check_box()
+    });
+}
+
+bind_check_box()
+unbind_check_box()
 
 </script>
 {% endblock %}
