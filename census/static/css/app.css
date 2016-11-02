@@ -544,6 +544,15 @@ aside .action-button {
     font-size: .83em;
     display: block;
     margin-bottom: 1em;
+    color: #fff !important;
+    background-color: #D75550 !important;
+    font-style: normal !important;
+    padding: 2px 11px
+}
+aside a {
+    color: #fff !important;
+    background-color: #D75550 !important;
+    font-style: normal !important;
 }
 .search-results aside {
     padding-top: 0;
@@ -1051,13 +1060,12 @@ h1.article-header-right {
     position: absolute;
     z-index: 49;
     top: 10px;
-    left: 10px;
+    left: 40px;
     background-color: #fff;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
-    border: 1px solid #014948;
-    width: 450px;
+    width: 550px;
     overflow-y: auto;
 }
 #locate #map-controls {
