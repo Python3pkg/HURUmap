@@ -53,7 +53,9 @@
                 <i id="menu-toggle" class="fa fa-bars"></i>
                 {% endif %}
                 <a class="title" href="{% url 'homepage' %}">
-                    <img src="{% static 'img/wazimap-kenya-logo.png' %}">
+                    {%block  logo%}
+
+                    {% endif %}
                 </a>
                 {% if not hide_nav_tools %}
                     {% block nav_tools %}
@@ -71,7 +73,7 @@
                             <a href="/#page-footer">Contact</a>
                         </div>
                         <div class="tool-group search-section">
-                            <input name="geography_select" id="geography-select" type="text" value="Search for a place in Kenya" autocomplete="off" style=" height: 35px;border-radius: 0px;color: #084A49;font-size:16px;">
+                            <input name="geography_select" id="geography-select" type="text" value="Search for a place in {{ WAZIMAP.name }}" autocomplete="off" style=" height: 35px;border-radius: 0px;color: #084A49;font-size:16px;">
                         </div>
                         {% if not hide_nav_compare %}
                         {% comment %}

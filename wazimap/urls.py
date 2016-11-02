@@ -34,24 +34,28 @@ urlpatterns = patterns('',
         kwargs  = {},
         name    = 'about',
     ),
+
     url(
         regex='^howitworks$',
         view=cache_page(STANDARD_CACHE_TIME)(HowitworksView.as_view()),
         kwargs={},
         name='howitworks',
    ),
+
    url(
        regex='^topics$',
        view=cache_page(STANDARD_CACHE_TIME)(TopicsView.as_view()),
        kwargs={},
        name='topics',
    ),
+
    url(
        regex='^showcase$',
        view=cache_page(STANDARD_CACHE_TIME)(ShowcaseView.as_view()),
        kwargs={},
        name='showcase',
    ),
+
    url(
        regex='^community$',
        view=cache_page(STANDARD_CACHE_TIME)(CommunityView.as_view()),
