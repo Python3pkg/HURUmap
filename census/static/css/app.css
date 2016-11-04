@@ -1581,7 +1581,6 @@ ul.toggle-set {
 }
 ul.toggle-set li {
     margin: 0;
-    float: left;
     width: 90px;
     text-align: center;
     position: relative;
