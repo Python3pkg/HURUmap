@@ -45,13 +45,9 @@ function makeEmbedFrame() {
                         data = data[embedFrame.params.chartDataID[i]];
                     }
                 }
-                console.log(data)
-                console.log('--------------------------')
-                console.log(results)
-                console.log('--------------------------')
+
                 embedFrame.data.chartData = data;
                 embedFrame.data.geographyData = results.geography;
-                embedFrame.data.comparisonLevels = results.comparisonLevels;
                 embedFrame.makeChart();
                 embedFrame.makeChartAbout();
             });
@@ -71,7 +67,6 @@ function makeEmbedFrame() {
             chartInitialSort: embedFrame.params.chartInitialSort,
             chartStatType: embedFrame.params.statType,
             geographyData: embedFrame.data.geographyData
-            comparisonLevels: embedFrame.data.comparisonLevels
         });
 
         if (!!embedFrame.parentOrigin) {
