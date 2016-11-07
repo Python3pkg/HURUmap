@@ -44,14 +44,12 @@
 <script type="text/javascript">
     //Toogle filters
      function hide_categories(f) {
-        console.log('hide')
         $('.' + f + '-sub').css('display', 'none')
         $('[data-filter='+ f +'] .end').html('+')
         $('[data-filter='+ f +']').click( function() { f = $(this).attr('data-filter'); $(this).unbind('click'); show_categories(f) });
      }
 
      function show_categories(f) {
-        console.log('show')
         $('.' + f + '-sub').css('display', 'inline-block')
         $('[data-filter='+ f +'] .end').html('-')
         $('[data-filter='+ f +']').click( function() { f = $(this).attr('data-filter');$(this).unbind('click'); hide_categories(f) });
