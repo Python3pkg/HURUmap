@@ -15,8 +15,8 @@
 {% block content_container %}
 
 <div class="head2head-wrapper">
-    <iframe class="frame-left" scrolling="no" src="{% url 'geography_detail' geography_id=geo_id1 %}"></iframe>
-    <iframe class="frame-right" scrolling="no" src="{% url 'geography_detail' geography_id=geo_id2 %}"></iframe>
+    <iframe class="frame-left" scrolling="no" src="{% url 'geography_detail' geography_id=geo_id1 %}{{get_params}}"></iframe>
+    <iframe class="frame-right" scrolling="no" src="{% url 'geography_detail' geography_id=geo_id2 %}{{get_params}}"></iframe>
 
     <div class="clear"></div>
 </div>

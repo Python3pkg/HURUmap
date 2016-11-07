@@ -33,6 +33,7 @@ class HomepageView(TemplateView):
     def get_context_data(self, *args, **kwargs):
         return {
             'root_geo': geo_data.root_geography(),
+            'topics': dict(settings.WAZIMAP.get('topics', {}))
         }
 
 
@@ -53,6 +54,8 @@ class GeographyDetailView(BaseGeographyDetailView):
             if kwargs['slug'] != self.geo.slug:
                 kwargs['slug'] = self.geo.slug
                 url = '/profiles/%s-%s-%s' % (self.geo_level, self.geo_code, self.geo.slug)
+                topic = self.request.GET.get('topic', None)
+                if topic: url += '?topic=' + topic
                 return redirect(url, permanent=True)
 
         # Skip the parent class's logic completely and go back to basics
@@ -68,7 +71,7 @@ class GeographyDetailView(BaseGeographyDetailView):
         if not profile_method:
             raise ValueError("You must define WAZIMAP.profile_builder in settings.py")
         profile_method = import_string(profile_method)
-        profile_data = profile_method(self.geo_code, self.geo_level, self.profile_name)
+        profile_data = profile_method(self.geo_code, self.geo_level, self.request.GET, self.profile_name)
 
         profile_data['geography'] = self.geo.as_dict_deep()
 
@@ -267,6 +270,37 @@ class TableAPIView(View):
 class AboutView(TemplateView):
     template_name = 'about.html'
 
+    def get_context_data(self):
+        return {'about': True}
+
+
+class HowitworksView(TemplateView):
+    template_name = 'howitworks.html'
+
+    def get_context_data(self):
+        return {'howitworks_page': True}
+
+
+class TopicsView(TemplateView):
+    template_name = 'topics.html'
+
+    def get_context_data(self, *args, **kwargs):
+        return {
+            'topics_page': True,
+            'topics': dict(settings.WAZIMAP.get('topics', {}))
+        }
+
+
+class ShowcaseView(TemplateView):
+    template_name = 'showcase.html'
+
+    def get_context_data(self):
+        return {'showcase_page': True}
+
+
+class CommunityView(TemplateView):
+    template_name = 'community.html'
+
 
 class GeographyCompareView(TemplateView):
     template_name = 'profile/head2head.html'
@@ -283,6 +317,8 @@ class GeographyCompareView(TemplateView):
 
             level, code = geo_id2.split('-', 1)
             page_context['geo2'] = geo_data.get_geography(code, level)
+            topic = self.request.GET.get('topic', None)
+            if topic: page_context['get_params'] = '?topic=' + topic
         except (ValueError, LocationNotFound):
             raise Http404
 
