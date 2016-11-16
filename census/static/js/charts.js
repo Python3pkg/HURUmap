@@ -45,7 +45,6 @@ function Chart(options) {
         chart.comparisonNames = {
             'this': (!!geographyThis) ? geographyThis.short_name : 'here',
         }
-        
         chart.comparisonLevels.forEach(function(d) {
             chart.comparisonNames[d] = (!!geographyParents[d]) ? geographyParents[d].short_name : d
         });
