@@ -11,6 +11,11 @@
 
 {% block body %}
 <div id="map-controls" class="clearfix">
+    <header class="box-header">
+        <a class="title" href="{% url 'homepage' %}">
+            <img src="{% static 'img/wazimap-logo.png' %}">
+        </a>
+    </header>
     <div class="box-content">
         <section class="clearfix">
             {% include 'data/_blocks/_toggle_menu.html' %}
