@@ -3055,3 +3055,6 @@ blockquote {
 #picker-group {
     margin-left:20px;
 }
+.banner-mobile {
+    display:none;
+}

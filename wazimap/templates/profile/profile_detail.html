@@ -31,6 +31,20 @@
     </article>
 </div>
 
+<div class="content-container clearfix banner mobile">
+    <article class="wrapper">
+        <section class="column-full clearfix">
+            <h1 class="article-header">Discover the Stories Behind the Data</h1>
+            <div class="search-section div-area">
+                <div><span>Search for a place in {{WAZIMAP.country_name}}</span> <i class="fa fa-search"></i></div>
+            </div>
+            <div class="search-section input-area">
+                <input name="geography_select" id="geography-select" type="text" autocomplete="off">
+            </div>
+        </section>
+    </article>
+</div>
+
 <div id="cover-map" class="clearfix">
     <div id="slippy-map"></div>
     <div id="cover-profile" class="wrapper">
@@ -99,21 +113,12 @@
 <section class="filters">
     <div class="filter-row">
         <a herf="#"><i>Filter results</i></a>
-        <a herf="#" class="hide-filters"><i>Hide filters</i></a>
     </div>
     {% for key, values in all_sections.items %}
     <div class="filter-row" data-filter="{{key}}">
         <i class="fa {{values.icon}}"></i>  {{values.topic|title}}
         <span class="end">+</span>
     </div>
-    <!--<div class="filter-row-sub {{key}}-sub">-->
-        <!--<span>All</span>-->
-        <!--{% if key in selected_topics %}-->
-        <!--<div class="box-checked"></div>-->
-        <!--{% else %}-->
-        <!--<div class="box-unchecked"></div>-->
-        <!--{% endif %}-->
-    <!--</div>-->
     {% for topic in values.profiles %}
     <div class="filter-row-sub {{key}}-sub">
         <span>{{topic|title}}</span>
@@ -125,8 +130,9 @@
     </div>
     {% endfor %}
     {% endfor %}
+    <a class="filters-reset" href="#">Reset</a>
 </section>
-
+<div class="filter-toggle-button end">Show Filters</div>
 
 {% comment %}
 <section class="clearfix" id="query-topic-picker">
@@ -205,14 +211,12 @@
 
     //Toogle filters
      function hide_categories(f) {
-        console.log('hide')
         $('.' + f + '-sub').css('display', 'none')
         $('[data-filter='+ f +'] .end').html('+')
         $('[data-filter='+ f +']').click( function() { f = $(this).attr('data-filter'); $(this).off(); show_categories(f) });
      }
 
      function show_categories(f) {
-        console.log('show')
         $('.' + f + '-sub').css('display', 'block')
         $('[data-filter='+ f +'] .end').html('-')
         $('[data-filter='+ f +']').click( function() { f = $(this).attr('data-filter');$(this).off(); hide_categories(f) });
@@ -222,6 +226,7 @@
         $(this).off()
         show_categories(f);
     });
+    $('.filter-toggle-button').toggle();
 </script>
 <script type="text/javascript">
 
