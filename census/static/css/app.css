@@ -399,7 +399,6 @@ article .section-container,
 }
 header.section-contents h1 {
     background-color:#f0f0f0;
-    height:50px;
     border-radius: 0px;
     line-height: 30px;
 }
@@ -449,7 +448,8 @@ header.section-contents h1 {
 }
 .typeahead-container .explain {
     clear: both;
-    margin-top: .5em;
+    height:36px;
+    line-height:36px;
 }
 .sidebar-block {
     margin-bottom: 2em;
