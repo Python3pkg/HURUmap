@@ -113,6 +113,7 @@
 <section class="filters">
     <div class="filter-row">
         <a herf="#"><i>Filter results</i></a>
+        <a herf="#" class="hide-filters"><i>Hide filters</i></a>
     </div>
     {% for key, values in all_sections.items %}
     <div class="filter-row" data-filter="{{key}}">
@@ -133,6 +134,7 @@
     <div class="filters-reset"><a href="#">Reset</a></div>
 </section>
 <div class="filter-toggle-button end">Show/hide Filters</div>
+</section>
 
 {% comment %}
 <section class="clearfix" id="query-topic-picker">
@@ -224,9 +226,11 @@
         $(this).off()
         show_categories(f);
     });
+
     $('.filter-toggle-button').click(function() {
         $('.filters').toggle()
     });
+
 </script>
 <script type="text/javascript">
 

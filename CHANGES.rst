@@ -1,6 +1,27 @@
 Wazimap Version History
 =======================
 
+0.5.8 (21 November 2016)
+------------------------
+
+* Support percentage values in the map view
+
+0.5.7 (17 November 2016)
+------------------------
+
+* Support tables with raw values that are percentages
+* Version 0.5.6 was not released
+
+0.5.5 (7 November 2016)
+-----------------------
+
+* Fix embedded charts (contributed by mevey)
+
+0.5.4 (28 October 2016)
+-----------------------
+
+* Don't show error for empty FieldTable with has_total=True
+
 0.5.3 (21 October 2016)
 -----------------------
 
