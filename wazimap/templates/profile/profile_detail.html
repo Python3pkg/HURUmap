@@ -86,7 +86,7 @@
 </section>
 {% endblock %}
 
-{% block content %}
+{% block filters %}
 <section class="filters">
     <div class="filter-row">
         <a herf="#"><i>Filter results</i></a>
@@ -111,8 +111,9 @@
     <div class="filters-reset"><a href="#">Reset</a></div>
 </section>
 <div class="filter-toggle-button end">Show/hide Filters</div>
-</section>
+{% endblock %}
 
+{% block content %}
 {% comment %}
 <section class="clearfix" id="query-topic-picker">
     <h2>Find data for this place</h2>
@@ -176,7 +177,7 @@
          w = Math.round(w/2);
          $('.content-container.wrapper').css('margin-left', (w + 380) + 'px');
          $('.filters').css('margin-left', w + 'px');
-         h = $('#slippy-map').height() + $('#page-header').height() + 140 + 81
+         h = $('#slippy-map').height() + $('#page-header').height() + $('#compare-place-picker').height()+ 24
          $('.filters').css('top', h);
          $('.filters').css('display', 'block');
      }
