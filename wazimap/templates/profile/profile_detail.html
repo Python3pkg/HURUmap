@@ -171,9 +171,11 @@
 {% endblock %}
 <script>
     if (! $('body').hasClass('profile-head2head-frame') ) {
-        w = $( window ).width() - $( '.content-container.wrapper' ).width() - 380;
+        w = $( window ).width() - $( '.content-container.wrapper' ).width() - $('.filters').width();
         w = Math.round(w/2);
-        $('.content-container.wrapper').css('margin-left', (w + 380) + 'px');
+        if (w < 0) w = 10;
+        padding-left = 30
+        $('.content-container.wrapper').css('margin-left', (w + $('.filters').width() + padding-left + 'px'));
         $('.filters').css('margin-left', w + 'px');
         h = $('#slippy-map').height() + $('#page-header').height() + $('#compare-place-picker').height()+ 24
         $('.filters').css('top', h);
