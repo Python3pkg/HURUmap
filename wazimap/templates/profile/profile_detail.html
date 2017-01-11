@@ -172,15 +172,25 @@
 <script src="{% static 'js/profile_map.js' %}"></script>
 {% endblock %}
 <script>
-     if (! $('body').hasClass('profile-head2head-frame') ) {
-         w = $( window ).width() - $( '.content-container.wrapper' ).width() - 380;
-         w = Math.round(w/2);
-         $('.content-container.wrapper').css('margin-left', (w + 380) + 'px');
-         $('.filters').css('margin-left', w + 'px');
-         h = $('#slippy-map').height() + $('#page-header').height() + $('#compare-place-picker').height()+ 24
-         $('.filters').css('top', h);
-         $('.filters').css('display', 'block');
-     }
+    if (! $('body').hasClass('profile-head2head-frame') ) {
+        w = $( window ).width() - $( '.content-container.wrapper' ).width() - 380;
+        w = Math.round(w/2);
+        $('.content-container.wrapper').css('margin-left', (w + 380) + 'px');
+        $('.filters').css('margin-left', w + 'px');
+        h = $('#slippy-map').height() + $('#page-header').height() + $('#compare-place-picker').height()+ 24
+        $('.filters').css('top', h);
+        $('.filters').css('display', 'block');
+    }
+
+    var stickySidebar = $('.filters').offset().top;
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > stickySidebar) {
+            $('.filters').addClass('affix');
+        }
+        else {
+            $('.filters').removeClass('affix');
+        }
+    });
      $('.wrapper').css('display', 'block');
      $('#compare-place-select').val('Compare this with another place')
      $('#compare-place-select').focus(function() {
