@@ -89,8 +89,7 @@
 {% block extra_elements %}
 <section class="filters">
     <div class="filter-row">
-        <a herf="#"><i>Filter results</i></a>
-        <a herf="#" class="hide-filters"><i>Hide filters</i></a>
+        <p><i>Filter results</i></p>
     </div>
     {% for key, values in all_sections.items %}
     <div class="filter-row" data-filter="{{key}}">
@@ -108,9 +107,8 @@
     </div>
     {% endfor %}
     {% endfor %}
-    <div class="filters-reset"><a href="#">Reset</a></div>
+    <div class="filters-reset"><p>Reset</p></div>
 </section>
-<div class="filter-toggle-button end">Show/hide Filters</div>
 {% endblock %}
 
 {% block content %}
@@ -186,37 +184,49 @@
     $(window).scroll(function() {
         if ($(window).scrollTop() > stickySidebar) {
             $('.filters').addClass('affix');
+            //($(window).scrollTop() + $(window).height() > ($(document).height() - ($('#page-footer').height() + $('.partners').height() ))) {
         }
         else {
             $('.filters').removeClass('affix');
+            $('.filters').removeClass('clear-bottom');
         }
     });
-     $('.wrapper').css('display', 'block');
-     $('#compare-place-select').val('Compare this with another place')
-     $('#compare-place-select').focus(function() {
+    $('.wrapper').css('display', 'block');
+    $('#compare-place-select').val('Compare this with another place')
+    $('#compare-place-select').focus(function() {
         $(this).val('')
-     });
+    });
 
     //Toogle filters
-     function hide_categories(f) {
+    function hide_categories(f) {
         $('.' + f + '-sub').css('display', 'none')
         $('[data-filter='+ f +'] .end').html('+')
         $('[data-filter='+ f +']').click( function() { f = $(this).attr('data-filter'); $(this).off(); show_categories(f) });
-     }
+    }
 
-     function show_categories(f) {
+    function show_categories(f) {
         $('.' + f + '-sub').css('display', 'block')
         $('[data-filter='+ f +'] .end').html('-')
         $('[data-filter='+ f +']').click( function() { f = $(this).attr('data-filter');$(this).off(); hide_categories(f) });
-     }
-     $('.filter-row').click(function() {
+    }
+    $('.filter-row').click(function() {
         f = $(this).attr('data-filter')
         $(this).off()
         show_categories(f);
     });
 
-    $('.filter-toggle-button').click(function() {
-        $('.filters').toggle()
+    $('.filters-reset').click(function() {
+        arr = $('.box-unchecked')
+        for (var i = 0; i < arr.length; i++) {
+            x = arr[i]
+            $(x).removeClass('box-unchecked')
+            $(x).addClass('box-checked')
+            v = $(x).attr('data-filter')
+            v = v.toLowerCase().replace(/ /g, '_')
+            $('#' + v).css('display', 'block')
+            bind_check_box()
+        }
+        return false;
     });
 
 </script>
@@ -377,9 +387,9 @@ function unbind_check_box() {
         bind_check_box()
     });
 }
-
-bind_check_box()
-unbind_check_box()
-
+$(document).ready(function() {
+    bind_check_box();
+    unbind_check_box();
+});
 </script>
 {% endblock %}
