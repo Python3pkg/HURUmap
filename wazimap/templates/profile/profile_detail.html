@@ -173,7 +173,7 @@
     if (! $('body').hasClass('profile-head2head-frame') ) {
         w = $( window ).width() - $( '.content-container.wrapper' ).width() - $('.filters').width();
         w = Math.round(w/2);
-        if (w < 0) w = 10;
+        if (w < 0 || $(window).width() < 1200) w = 10;
         padding_left = 30
         $('.content-container.wrapper').css('margin-left', (w + $('.filters').width() + padding_left + 'px'));
         $('.filters').css('margin-left', w + 'px');
