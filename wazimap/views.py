@@ -1,4 +1,5 @@
 from itertools import chain
+from collections import OrderedDict
 import json
 
 from django.conf import settings
@@ -33,7 +34,7 @@ class HomepageView(TemplateView):
     def get_context_data(self, *args, **kwargs):
         return {
             'root_geo': geo_data.root_geography(),
-            'topics': dict(settings.WAZIMAP.get('topics', {}))
+            'topics': OrderedDict(settings.WAZIMAP.get('topics', {}))
         }
 
 
@@ -287,7 +288,7 @@ class TopicsView(TemplateView):
     def get_context_data(self, *args, **kwargs):
         return {
             'topics_page': True,
-            'topics': dict(settings.WAZIMAP.get('topics', {}))
+            'topics': OrderedDict(settings.WAZIMAP.get('topics', {}))
         }
 
 

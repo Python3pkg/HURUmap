@@ -15,7 +15,7 @@
                 topics = JSON.parse("{{topics|safe}}".replace(/'/g, '"'));
                 for (k in topics) {
                     document.write('<div class="column-half topics-topic">');
-                    document.write('<i class="fa '+ topics[k].icon +'" aria-hidden="true"></i>');
+                    document.write('<img src="'+ topics[k].icon +'" aria-hidden="true"/>');
                     document.write('<div class="topic-name">'+ topics[k].topic +'</div>');
                     document.write('<div class="topic-desc">'+ topics[k].desc +'</div>');
                     document.write('<div class="categories">');
