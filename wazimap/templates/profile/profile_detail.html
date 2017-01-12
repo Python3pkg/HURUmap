@@ -86,7 +86,21 @@
 </section>
 {% endblock %}
 
-{% block extra_elements %}
+{% block content %}
+{% comment %}
+<section class="clearfix" id="query-topic-picker">
+    <h2>Find data for this place</h2>
+    <div class="typeahead-container">
+        <input name="topic_select" id="topic-select" type="text" placeholder="Search by table or column name..." autocomplete="off">
+    </div>
+</section>
+{% endcomment %}
+
+{% block profile_preamble %}
+
+<!--<p class="explain">Interact with charts and statistics for additional information. {{geo_id1}} {{geo_id2}}</p>-->
+{% endblock %}
+
 <section class="filters">
     <div class="filter-row">
         <p><i>Filter results</i></p>
@@ -109,22 +123,6 @@
     {% endfor %}
     <div class="filters-reset"><p>Reset</p></div>
 </section>
-{% endblock %}
-
-{% block content %}
-{% comment %}
-<section class="clearfix" id="query-topic-picker">
-    <h2>Find data for this place</h2>
-    <div class="typeahead-container">
-        <input name="topic_select" id="topic-select" type="text" placeholder="Search by table or column name..." autocomplete="off">
-    </div>
-</section>
-{% endcomment %}
-
-{% block profile_preamble %}
-
-<!--<p class="explain">Interact with charts and statistics for additional information. {{geo_id1}} {{geo_id2}}</p>-->
-{% endblock %}
 
 <div class="profiles-container">
     {% block profile_detail %}
@@ -171,12 +169,13 @@
 {% endblock %}
 <script>
     if (! $('body').hasClass('profile-head2head-frame') ) {
-        w = $( window ).width() - $( '.content-container.wrapper' ).width() - $('.filters').width();
+        /**w = $( window ).width() - $( '.content-container.wrapper' ).width() - $('.filters').width();
         w = Math.round(w/2);
         if (w < 0 || $(window).width() < 1200) w = 10;
         padding_left = 30
-        $('.content-container.wrapper').css('margin-left', (w + $('.filters').width() + padding_left + 'px'));
-        $('.filters').css('margin-left', w + 'px');
+        $('.content-container.wrapper').css('margin-left','0px' );
+        $('.profiles-container').css('width', $( '.content-container.wrapper' ).width() );
+        $('.filters').css('margin-left', w + 'px');**/
         h = $('#slippy-map').height() + $('#page-header').height() + $('#compare-place-picker').height()+ 24
         $('.filters').css('top', h);
         $('.filters').css('display', 'block');

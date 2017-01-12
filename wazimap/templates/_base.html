@@ -114,16 +114,16 @@
         <div class="content-container clearfix partners">
             <article class="clearfix wrapper">
                 <section>
-                    <div class="column-quarter callout with-icon" style="width:15%;float:left;">
+                    <div class="callout with-icon" style="width:auto;float:left;">
                         <p style="margin-top:30px;">Supported by :</p>
                     </div>
-                    <div class="callout with-icon" style="width:18%;float:left;">
+                    <div class="callout with-icon column-fifth">
                         <img src="{% static 'img/cfafrica-logo.png' %}" style="height:80px;">
                     </div>
-                    <div class="callout with-icon" style="width:31%;float:left;">
+                    <div class="callout with-icon column-third">
                         <img src="{% static 'img/icfj-logo.png' %}" style="height:80px;">
                     </div>
-                    <div class="callout with-icon" style="width:18%;float:left;">
+                    <div class="callout with-icon column-quarter">
                         <img src="{% static 'img/mma.png' %}" style="height:60px;">
                     </div>
                 </section>
@@ -192,7 +192,6 @@
         </footer>
         {% endblock body %}
 
-        {% block extra_elements %}{% endblock %}
         {% include 'settings_js.html' %}
 
         {% block body_javascript %}
