@@ -383,6 +383,9 @@ $(document).ready(function() {
         if (i < 0) {
             $(this).css('display', 'none');
         }
+        $('.filter-row-sub').each(function() {
+             $(this).css('display', 'block');
+        });
     });
 
     bind_check_box();
@@ -395,12 +398,10 @@ $(document).ready(function() {
             bottom = $('#page-footer').height() + $('.partners').height()
             distance_from_top_minus_footer = $(document).height() - (bottom)
             if (($(window).scrollTop() + $(window).height()) >= distance_from_top_minus_footer) {
-                console.log('closed in')
-                $('.filters').css('bottom', bottom + 'px');
-                $('.filters').css('top', '');
+                t = $(window).height() - (bottom + $('.filters').height())
+                console.log(t)
+                $('.filters').css('top', t);
             } else {
-                $('.filters').css('bottom', '');
-                $('.filters').css('top', '');
                 $('.filters').removeClass('affix');
                 $('.filters').addClass('affix');
             }
