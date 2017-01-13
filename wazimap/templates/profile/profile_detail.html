@@ -168,12 +168,13 @@
 <script src="{% static 'js/profile_map.js' %}"></script>
 {% endblock %}
 <script>
-    if (! $('body').hasClass('profile-head2head-frame') ) {
+    if (! $('body').hasClass('profile-head2head-frame') && $( window ).width() > 600 ) {
         w = $( window ).width() - $( '.content-container.wrapper' ).width();
         w = Math.round(w/2);
         if (w < 0 || $(window).width() < $( '.content-container.wrapper' ).width()) w = 10;
         $('.filters').css('margin-left', w + 'px');
-        $('.profiles-container').css('width', ($( '.content-container.wrapper' ).width() - $('.filters').width()) - 10+ 'px');
+        $('.profiles-container').css('width', ($( '.content-container.wrapper' ).width() - $('.filters').width()- 10 )+ 'px');
+        $('#suggestdata').css('width', ($( '.content-container.wrapper' ).width() - $('.filters').width()- 10 )+ 'px');
         h = $('#slippy-map').height() + $('#page-header').height() + $('#compare-place-picker').height()+ 24
         $('.filters').css('top', h);
         $('.filters').css('display', 'block');
