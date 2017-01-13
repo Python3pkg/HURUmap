@@ -395,7 +395,7 @@ $(document).ready(function() {
     $(window).scroll(function() {
         if ($(window).scrollTop() > stickySidebar) {
             $('.filters').addClass('affix');
-            bottom = $('#page-footer').height() + $('.partners').height()
+            /**bottom = $('#page-footer').height() + $('.partners').height()
             distance_from_top_minus_footer = $(document).height() - (bottom)
             if (($(window).scrollTop() + $(window).height()) >= distance_from_top_minus_footer) {
                 t = $(window).height() - (bottom + $('.filters').height())
@@ -404,7 +404,7 @@ $(document).ready(function() {
             } else {
                 $('.filters').removeClass('affix');
                 $('.filters').addClass('affix');
-            }
+            }**/
         } else {
             $('.filters').removeClass('affix');
         }
