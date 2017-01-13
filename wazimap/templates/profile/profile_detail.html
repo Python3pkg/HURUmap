@@ -378,7 +378,7 @@ function unbind_check_box() {
 $(document).ready(function() {
     /**Hide sections that are not selected **/
     topics = {{selected_sections|safe}}
-    $('article').each(function(this) {
+    $('.profiles-container article.clearfix').each(function() {
         i = topics.indexOf($(this).attr('id'))
         if (i < 0) {
             $(this).css('display', 'none');
