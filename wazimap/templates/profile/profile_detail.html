@@ -173,9 +173,9 @@
         w = Math.round(w/2);
         if (w < 0 || $(window).width() < $( '.content-container.wrapper' ).width()) w = 10;
         $('.filters').css('margin-left', (w - 10) + 'px');
-        $('.profiles-container').css('width', ($( '.content-container.wrapper' ).width() - $('.filters').width()- 15 )+ 'px');
+        $('.profiles-container').css('width', ($( '.content-container.wrapper' ).width() - $('.filters').width() - 15 )+ 'px');
         $('#suggestdata').css('width', $('.profiles-container').width() + 'px');
-        h = $('#slippy-map').height() + $('#page-header').height() + $('#compare-place-picker').height()+ 24
+        h = $('#slippy-map').height() + $('#page-header').height() + $('#compare-place-picker').height() + 24
         $('.filters').css('top', h);
         $('.filters').css('display', 'block');
     }
@@ -393,7 +393,19 @@ $(document).ready(function() {
     bind_check_box();
     unbind_check_box();
 
-
+    //Makes the filters sidebar scroll along with the page
+    var h = $('#slippy-map').height() + $('#page-header').height() + $('#compare-place-picker').height()+ 24
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > h) {
+            $('.filters').addClass('affix');
+            y = ($(document).height() - $('#page-footer').height() - ($('.partners').height() * 2.5))
+            z = ($(window).scrollTop() +  $('.filters').height())
+            $(".filters").css("top", Math.min(90, y - z) + 'px');
+        } else {
+            $('.filters').removeClass('affix')
+            $(".filters").css("top", h + 'px');
+        }
+    });
 });
 </script>
 {% endblock %}
