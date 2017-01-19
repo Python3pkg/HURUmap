@@ -173,7 +173,7 @@
         w = Math.round(w/2);
         if (w < 0 || $(window).width() < $( '.content-container.wrapper' ).width()) w = 10;
         $('.filters').css('margin-left', (w - 10) + 'px');
-        $('.profiles-container').css('width', ($( '.content-container.wrapper' ).width() - $('.filters').width()- 20 )+ 'px');
+        $('.profiles-container').css('width', ($( '.content-container.wrapper' ).width() - $('.filters').width()- 15 )+ 'px');
         $('#suggestdata').css('width', $('.profiles-container').width() + 'px');
         h = $('#slippy-map').height() + $('#page-header').height() + $('#compare-place-picker').height()+ 24
         $('.filters').css('top', h);
@@ -397,11 +397,9 @@ $(document).ready(function() {
     $(window).scroll(function() {
         if ($(window).scrollTop() > stickySidebar) {
             $('.filters').addClass('affix');
-            $('.filters').css('top', '90px !important');
-            if ( ($(window).scrollTop() +  $('.filters').height()) > ($(document).height() - $('#page-footer').height() - ($('.partners').height() * 2.5)) ) {
-                console.log('threshold reached')
-                $('.filters').css('top', '-280px !important');
-            }
+            y = ($(document).height() - $('#page-footer').height() - ($('.partners').height() * 2.5))
+            z = ($(window).scrollTop() +  $('.filters').height())
+            $(".filters").css("top", Math.min(90, y - z) + 'px !important');
         } else {
             $('.filters').removeClass('affix');
             $('.filters').css('top', '');
