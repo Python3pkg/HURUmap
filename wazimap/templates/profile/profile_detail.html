@@ -168,23 +168,6 @@
 <script src="{% static 'js/profile_map.js' %}"></script>
 {% endblock %}
 <script>
-    if (! $('body').hasClass('profile-head2head-frame') && $( window ).width() > 800 ) {
-        w = $( window ).width() - $( '.content-container.wrapper' ).width();
-        w = Math.round(w/2);
-        if (w < 0 || $(window).width() < $( '.content-container.wrapper' ).width()) w = 10;
-        $('.filters').css('margin-left', (w - 10) + 'px');
-        $('.profiles-container').css('width', ($( '.content-container.wrapper' ).width() - $('.filters').width() - 15 )+ 'px');
-        $('#suggestdata').css('width', $('.profiles-container').width() + 'px');
-        h = $('#slippy-map').height() + $('#page-header').height() + $('#compare-place-picker').height() + 24
-        $('.filters').css('top', h);
-        $('.filters').css('display', 'block');
-    }
-    $('.wrapper').css('display', 'block');
-    $('#compare-place-select').val('Compare this with another place')
-    $('#compare-place-select').focus(function() {
-        $(this).val('')
-    });
-
     //Toogle filters
     function hide_categories(f) {
         $('.' + f + '-sub').css('display', 'none')
@@ -376,6 +359,25 @@ function unbind_check_box() {
     });
 }
 $(document).ready(function() {
+    //Position the filters and the data section accordingly
+    if (! $('body').hasClass('profile-head2head-frame') && $( window ).width() > 800 ) {
+        w = $( window ).width() - $( '.content-container.wrapper' ).width();
+        w = Math.round(w/2);
+        if (w < 0 || $(window).width() < $( '.content-container.wrapper' ).width()) w = 10;
+        $('.filters').css('margin-left', (w - 10) + 'px');
+        $('.profiles-container').css('width', ($( '.content-container.wrapper' ).width() - $('.filters').width() - 15 )+ 'px');
+        $('#suggestdata').css('width', $('.profiles-container').width() + 'px');
+        h = $('#slippy-map').height() + $('#page-header').height() + $('#compare-place-picker').height() + 24
+        $('.filters').css('top', h);
+        $('.filters').css('display', 'block');
+    }
+    $('.wrapper').css('display', 'block');
+    $('#compare-place-select').val('Compare this with another place')
+    $('#compare-place-select').focus(function() {
+        $(this).val('')
+    });
+
+
     /**Hide sections that are not selected **/
     topics = {{selected_sections|safe}}
     $('.profiles-container article.clearfix').each(function() {
