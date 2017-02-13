@@ -122,7 +122,6 @@
 
 {% endblock %}
 
-{% block howitworks %}
 <div class="content-container clearfix howitworks" id="howitworks">
     <article class="clearfix wrapper">
         <header class="column-full">
@@ -147,9 +146,7 @@
         </section>
     </article>
 </div>
-{% endblock %}
 
-{% block showcase %}
 <div class="content-container clearfix showcase">
     <article class="clearfix wrapper">
         <header class="column-full">
@@ -157,7 +154,7 @@
             <p class="article-p">Sample stories written with the help of HURUmap</p>
         </header>
         <section>
-            <div class="column-third callout with-icon">
+            <div class="column-third callout with-icon" onclick="window.location.href='http://www.the-star.co.ke/news/2016/11/04/marakwet-locals-intercept-lorry-ferrying-30-donkeys-as-demand-for-meat_c1449795'">
                 <img src="{% static 'img/crowds.jpg' %}"/>
                 <h2>The jobless millions</h2>
                 <p>By Frankline Sunday</p>
@@ -181,7 +178,7 @@
         </section>
     </article>
 </div>
-{% endblock %}
+
 
 {% block body_javascript_extra %}
 {{ block.super }}
