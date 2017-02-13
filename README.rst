@@ -4,8 +4,8 @@ Wazimap
 .. image:: https://badge.fury.io/py/wazimap.svg
     :target: http://badge.fury.io/py/wazimap
 
-.. image:: https://travis-ci.org/Code4SA/indigo.svg
-    :target: http://travis-ci.org/Code4SA/indigo
+.. image:: https://travis-ci.org/Code4SA/wazimap.svg
+    :target: http://travis-ci.org/Code4SA/wazimap
 
 Wazimap is a Django application for exploring census and other similar data. It makes it easy to understand a place
 through the eyes of the data, and to explore data across a range of places. It is most suited for census data
@@ -33,10 +33,14 @@ Read the `full Wazimap documentation <http://wazimap.readthedocs.org/en/latest/>
 Releasing a New Version
 -----------------------
 
-1. Update VERSION appropriately
-2. Update the CHANGES.rst
-3. Commit and push to github
-4. Release to PyPI::
+1. Run the tests::
+
+    python manage.py test
+
+2. Update VERSION appropriately
+3. Update the CHANGES.rst
+4. Commit and push to github
+5. Release to PyPI::
 
     python setup.py sdist bdist_wheel upload
 
