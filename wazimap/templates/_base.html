@@ -28,9 +28,16 @@
             })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
             {% if WAZIMAP.ga_tracking_id %}
-            ga('create', '{{ WAZIMAP.ga_tracking_id }}', 'auto');
-            {% endif %}
+            ga('create', '{{ id }}', 'auto');
             ga('send', 'pageview');
+            {% endif %}
+            
+            {% if WAZIMAP.ga_tracking_ids %}
+            {% for id in WAZIMAP.ga_tracking_ids %}
+            ga('create', '{{ id }}', 'auto');
+            ga('send', 'pageview');
+            {% endfor%}
+            {% endif %}
 
         </script>
         <!-- End Google Analytics -->
