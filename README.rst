@@ -30,6 +30,9 @@ Using Wazimap
 
 Read the `full Wazimap documentation <http://wazimap.readthedocs.org/en/latest/>`_ to get started.
 
+Development
+===========
+
 Releasing a New Version
 -----------------------
 
@@ -44,9 +47,13 @@ Releasing a New Version
 
     python setup.py sdist bdist_wheel upload
 
-License
-=======
+License and Copyright
+=====================
 
-Wazimap code is licensed under the MIT License.
+Copyright (c) 2014 Census Reporter.
 
-Wazimap branding is copyright Media Monitoring Africa (MMA) and cannot be used without permission.
+Wazimap is licensed under the MIT License.
+
+The Wazimap name and branding is Copyright 2013-2017 Media Monitoring Africa (MMA) and may not be used without permission.
+
+If you use this software, please provide attribution to Census Reporter, Wazimap, Media Monitoring Africa and Code for South Africa.
