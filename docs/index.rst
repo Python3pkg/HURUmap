@@ -19,12 +19,23 @@ It is maintained by Code for South Africa.
 * Wazimap is on GitHub at `github.com/Code4SA/wazimap <https://github.com/Code4SA/wazimap>`_.
 * Wazimap is on Twitter as `@Wazimap <https://twitter.com/@Wazimap>`_.
 
-License
-=======
+Sites using Wazimap
+===================
 
-Wazimap code is licensed under the MIT License.
+* `Wazimap South Africa <http://wazimap.co.za/>`_
+* `Nepal Map <http://www.nepalmap.org>`_
+* `Counting India <http://www.countingindia.com/>`_
 
-Wazimap branding is copyright Code for South Africa.
+License and Copyright
+=====================
+
+Copyright (c) 2014 Census Reporter
+
+Wazimap is licensed under the MIT License.
+
+The Wazimap name and branding is Copyright 2013-2017 Media Monitoring Africa (MMA) and may not be used without permission.
+
+If you use this software, please provide attribution to Census Reporter, Wazimap, Media Monitoring Africa and Code for South Africa.
 
 Contents
 ========

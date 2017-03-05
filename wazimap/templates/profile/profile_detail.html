@@ -22,29 +22,6 @@
 {% block body_id %}profile{% endblock %}
 
 {% block header_content %}
-<div class="content-container clearfix banner">
-    <article class="wrapper">
-        <section class="column-full clearfix">
-            <h1 class="article-header">Discover the Stories Behind the Data</h1>
-            <h4>WAZImap is a tool aimed at helping journalists add content and depth to stories.</h4>
-        </section>
-    </article>
-</div>
-
-<div class="content-container clearfix banner mobile">
-    <article class="wrapper">
-        <section class="column-full clearfix">
-            <h1 class="article-header">Discover the Stories Behind the Data</h1>
-            <div class="search-section div-area">
-                <div><span>Search for a place in {{WAZIMAP.country_name}}</span> <i class="fa fa-search"></i></div>
-            </div>
-            <div class="search-section input-area">
-                <input name="geography_select" id="geography-select" type="text" autocomplete="off">
-            </div>
-        </section>
-    </article>
-</div>
-
 <div id="cover-map" class="clearfix">
     <div id="slippy-map"></div>
     <div id="cover-profile" class="wrapper">
@@ -110,10 +87,23 @@
 {% endblock %}
 
 {% block content %}
+{% comment %}
+<section class="clearfix" id="query-topic-picker">
+    <h2>Find data for this place</h2>
+    <div class="typeahead-container">
+        <input name="topic_select" id="topic-select" type="text" placeholder="Search by table or column name..." autocomplete="off">
+    </div>
+</section>
+{% endcomment %}
+
+{% block profile_preamble %}
+
+<!--<p class="explain">Interact with charts and statistics for additional information. {{geo_id1}} {{geo_id2}}</p>-->
+{% endblock %}
+
 <section class="filters">
     <div class="filter-row">
-        <a herf="#"><i>Filter results</i></a>
-        <a herf="#" class="hide-filters"><i>Hide filters</i></a>
+        <p><i>Filter results</i></p>
     </div>
     {% for key, values in all_sections.items %}
     <div class="filter-row" data-filter="{{key}}">
@@ -131,24 +121,8 @@
     </div>
     {% endfor %}
     {% endfor %}
-    <div class="filters-reset"><a href="#">Reset</a></div>
+    <div class="filters-reset"><p>Reset</p></div>
 </section>
-<div class="filter-toggle-button end">Show/hide Filters</div>
-</section>
-
-{% comment %}
-<section class="clearfix" id="query-topic-picker">
-    <h2>Find data for this place</h2>
-    <div class="typeahead-container">
-        <input name="topic_select" id="topic-select" type="text" placeholder="Search by table or column name..." autocomplete="off">
-    </div>
-</section>
-{% endcomment %}
-
-{% block profile_preamble %}
-
-<!--<p class="explain">Interact with charts and statistics for additional information. {{geo_id1}} {{geo_id2}}</p>-->
-{% endblock %}
 
 <div class="profiles-container">
     {% block profile_detail %}
@@ -194,41 +168,62 @@
 <script src="{% static 'js/profile_map.js' %}"></script>
 {% endblock %}
 <script>
-     if (! $('body').hasClass('profile-head2head-frame') ) {
-         w = $( window ).width() - $( '.content-container.wrapper' ).width() - 380;
-         w = Math.round(w/2);
-         $('.content-container.wrapper').css('margin-left', (w + 380) + 'px');
-         $('.filters').css('margin-left', w + 'px');
-         h = $('#slippy-map').height() + $('#page-header').height() + 140 + 81
-         $('.filters').css('top', h);
-         $('.filters').css('display', 'block');
-     }
-     $('.wrapper').css('display', 'block');
-     $('#compare-place-select').val('Compare this with another place')
-     $('#compare-place-select').focus(function() {
+    function position_filters() {
+         //Position the filters and the data section accordingly
+        if (! $('body').hasClass('profile-head2head-frame') && $( window ).width() > 800 ) {
+            w = $( window ).width() - $( '.content-container.wrapper' ).width();
+            w = Math.round(w/2);
+            if (w < 0 || $(window).width() < $( '.content-container.wrapper' ).width()) w = 10;
+            $('.filters').css('margin-left', (w - 10) + 'px');
+            $('.profiles-container').css('width', ($( '.content-container.wrapper' ).width() - $('.filters').width() - 15 )+ 'px');
+            $('#suggestdata').css('width', $('.profiles-container').width() + 'px');
+            h = $('#slippy-map').height() + $('#page-header').height() + $('#compare-place-picker').height() + 24
+            $('.filters').css('top', h);
+            $('.filters').css('display', 'block');
+        }
+        if ($( window ).width() < 800) {
+            $('.filters').css('display', 'none');
+        }
+        $('.wrapper').css('display', 'block');
+    }
+    position_filters()
+
+    //Focus the compare input area
+    $('#compare-place-select').val('Compare this with another place')
+    $('#compare-place-select').focus(function() {
         $(this).val('')
-     });
+    });
 
     //Toogle filters
-     function hide_categories(f) {
+    function hide_categories(f) {
         $('.' + f + '-sub').css('display', 'none')
         $('[data-filter='+ f +'] .end').html('+')
         $('[data-filter='+ f +']').click( function() { f = $(this).attr('data-filter'); $(this).off(); show_categories(f) });
-     }
+    }
 
-     function show_categories(f) {
+    function show_categories(f) {
         $('.' + f + '-sub').css('display', 'block')
         $('[data-filter='+ f +'] .end').html('-')
         $('[data-filter='+ f +']').click( function() { f = $(this).attr('data-filter');$(this).off(); hide_categories(f) });
-     }
-     $('.filter-row').click(function() {
+    }
+    $('.filter-row').click(function() {
         f = $(this).attr('data-filter')
         $(this).off()
         show_categories(f);
     });
 
-    $('.filter-toggle-button').click(function() {
-        $('.filters').toggle()
+    $('.filters-reset').click(function() {
+        arr = $('.box-unchecked')
+        for (var i = 0; i < arr.length; i++) {
+            x = arr[i]
+            $(x).removeClass('box-unchecked')
+            $(x).addClass('box-checked')
+            v = $(x).attr('data-filter')
+            v = v.toLowerCase().replace(/ /g, '_')
+            $('#' + v).css('display', 'block')
+            bind_check_box()
+        }
+        return false;
     });
 
 </script>
@@ -389,9 +384,39 @@ function unbind_check_box() {
         bind_check_box()
     });
 }
+$(document).ready(function() {
+    position_filters();
 
-bind_check_box()
-unbind_check_box()
+    /**Hide sections that are not selected **/
+    topics = {{selected_sections|safe}}
+    $('.profiles-container article.clearfix').each(function() {
+        i = topics.indexOf($(this).attr('id'))
+        if (i < 0) {
+            $(this).css('display', 'none');
+        }
+        /**if (topics.length > 1) {
+            $('.filter-row-sub').each(function() {
+                 $(this).css('display', 'block');
+            });
+        }**/
+    });
 
+    bind_check_box();
+    unbind_check_box();
+
+    //Makes the filters sidebar scroll along with the page
+    var h = $('#slippy-map').height() + $('#page-header').height() + $('#compare-place-picker').height()+ 24
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > h) {
+            $('.filters').addClass('affix');
+            y = ($(document).height() - $('#page-footer').height() - ($('.partners').height() * 2.5))
+            z = ($(window).scrollTop() +  $('.filters').height())
+            $(".filters").css("top", Math.min(90, y - z) + 'px');
+        } else {
+            $('.filters').removeClass('affix')
+            $(".filters").css("top", h + 'px');
+        }
+    });
+});
 </script>
 {% endblock %}

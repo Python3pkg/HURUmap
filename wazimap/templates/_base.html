@@ -28,9 +28,16 @@
             })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
             {% if WAZIMAP.ga_tracking_id %}
-            ga('create', '{{ WAZIMAP.ga_tracking_id }}', 'auto');
-            {% endif %}
+            ga('create', '{{ id }}', 'auto');
             ga('send', 'pageview');
+            {% endif %}
+            
+            {% if WAZIMAP.ga_tracking_ids %}
+            {% for id in WAZIMAP.ga_tracking_ids %}
+            ga('create', '{{ id }}', 'auto');
+            ga('send', 'pageview');
+            {% endfor%}
+            {% endif %}
 
         </script>
         <!-- End Google Analytics -->
@@ -114,17 +121,17 @@
         <div class="content-container clearfix partners">
             <article class="clearfix wrapper">
                 <section>
-                    <div class="column-quarter callout with-icon" style="width:15%;float:left;">
+                    <div class="callout with-icon" style="width:auto;float:left;">
                         <p style="margin-top:30px;">Supported by :</p>
                     </div>
-                    <div class="callout with-icon" style="width:18%;float:left;">
-                        <img src="{% static 'img/cfafrica-logo.png' %}" style="height:80px;">
+                    <div class="callout with-icon column-quarter">
+                        <img src="{% static 'img/cfafrica-logo.png' %}" style="max-height:80px;max-width:100%;">
                     </div>
-                    <div class="callout with-icon" style="width:31%;float:left;">
-                        <img src="{% static 'img/icfj-logo.png' %}" style="height:80px;">
+                    <div class="callout with-icon column-third">
+                        <img src="{% static 'img/icfj-logo.png' %}" style="max-height:80px;max-width:100%;">
                     </div>
-                    <div class="callout with-icon" style="width:18%;float:left;">
-                        <img src="{% static 'img/mma.png' %}" style="height:60px;">
+                    <div class="callout with-icon column-third">
+                        <img src="{% static 'img/mma.png' %}" style="max-height:40px;max-width:100%;">
                     </div>
                 </section>
             </article>
