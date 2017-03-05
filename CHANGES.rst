@@ -1,4 +1,4 @@
-Wazimap Version History
+HURUmap Version History
 =======================
 
 0.7.1 (25 January 2017)
