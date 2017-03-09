@@ -1,6 +1,13 @@
 HURUmap Version History
 =======================
 
+0.7.4 (9 March 2017)
+--------------------
+
+* Using GDAL 1.x
+* Added common images here
+* Wazimap == 0.7.2
+
 0.7.3 (9 March 2017)
 --------------------
 

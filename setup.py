@@ -93,6 +93,6 @@ setup(
     extras_require={
         'dev': ['nose', 'flake8'],
         'test': ['nose', 'flake8'],
-        'gdal': ['GDAL', 'Shapely>=1.5.13'],
+        'gdal': ['GDAL==1.*', 'Shapely>=1.5.13'],
     },
 )
