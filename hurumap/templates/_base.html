@@ -7,12 +7,15 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>{% block head_title %}HURUmap{% endblock %}</title>
+        <title>{% block head_title %}{{ HURUMAP.name }}{% endblock %}</title>
         <meta name="description" content="{% block head_meta_description %}{% endblock %}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         {% block head_css %}
         <link rel="stylesheet" href="{{ STATIC_URL }}css/vendor/normalize.min.css">
         <link rel="stylesheet" href="{% static 'css/app.css' %}">
+        <link rel="stylesheet" href="{% static 'css/hurumap.css' %}">
+        <link href="https://fonts.googleapis.com/css?family=Lato|Poppins" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
         {% block head_css_extra %}{% endblock %}{% endblock head_css %}
         {% block head_javascript %}
         <script src="//cdn.jsdelivr.net/g/modernizr@2.7,respond@1.4"></script>
@@ -24,8 +27,17 @@
             m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
             })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-            ga('create', 'UA-48399585-5', 'auto');
+            {% if HURUMAP.ga_tracking_id %}
+            ga('create', '{{ id }}', 'auto');
             ga('send', 'pageview');
+            {% endif %}
+            
+            {% if HURUMAP.ga_tracking_ids %}
+            {% for id in HURUMAP.ga_tracking_ids %}
+            ga('create', '{{ id }}', 'auto');
+            ga('send', 'pageview');
+            {% endfor%}
+            {% endif %}
 
         </script>
         <!-- End Google Analytics -->
@@ -48,13 +60,27 @@
                 <i id="menu-toggle" class="fa fa-bars"></i>
                 {% endif %}
                 <a class="title" href="{% url 'homepage' %}">
-                    <img src="{% static 'img/hurumap-logo.png' %}"> HURUmap
+                    {%block  logo%}
+
+                    {% endblock %}
                 </a>
                 {% if not hide_nav_tools %}
                     {% block nav_tools %}
                     <div id="menu" class="tool-set clearfix">
                         <div class="tool-group">
-                            <input name="geography_select" id="geography-select" type="text" placeholder="Start typing a place name or address..." autocomplete="off">
+                            <a href="/about" {%if about %} class="active"{%endif%}>About HURUmap {{about}}</a>
+                        </div>
+                        <div class="tool-group">
+                            <a href="/howitworks" {%if howitworks%} class="active"{%endif%}>How HURUmap Works</a>
+                        </div>
+                        <div class="tool-group">
+                            <a href="/topics" {%if topics%} class="active"{%endif%}>Topics</a>
+                        </div>
+                        <div class="tool-group">
+                            <a href="/#page-footer">Contact</a>
+                        </div>
+                        <div class="tool-group search-section">
+                            <input name="geography_select" id="geography-select" type="text" value="Search for a place in {{ HURUMAP.name }}" autocomplete="off" style=" height: 35px;border-radius: 0px;color: #084A49;font-size:16px;">
                         </div>
                         {% if not hide_nav_compare %}
                         {% comment %}
@@ -71,10 +97,14 @@
                     {% endblock %}
                 {% endif %}
                 <div class="header-buttons">
-                    <a class="wide-only" href="https://twitter.com/@Code4Africa" title="@Code4Africa on Twitter"><i class="fa fa-2x fa-twitter"></i></a>
-                    <a href="http://www.mediamonitoringafrica.org/" target="_blank">
-                        <img class="mma-logo" src="{% static 'img/mma.png' %}">
-                    </a>
+                    {% if HURUMAP.twitter %}
+                    <a class="wide-only" href="https://twitter.com/{{ HURUMAP.twitter }}" title="{{ HURUMAP.twitter }} on Twitter" target="_blank"><i class="fa fa-2x fa-twitter"></i></a>
+                    {% endif %}
+                {% block header_branding %}
+                    <!--<a href="http://www.mediamonitoringafrica.org/" target="_blank">-->
+                        <!--<img class="mma-logo" src="{% static 'img/mma.png' %}">-->
+                    <!--</a>-->
+                {% endblock %}
                 </div>
             </div>
         </header>
@@ -86,6 +116,26 @@
             {% block content %}{% endblock %}
         </div>
         {% endblock %}
+
+
+        <div class="content-container clearfix partners">
+            <article class="clearfix wrapper">
+                <section>
+                    <div class="callout with-icon" style="width:auto;float:left;">
+                        <p style="margin-top:30px;">Supported by :</p>
+                    </div>
+                    <div class="callout with-icon column-quarter">
+                        <img src="{% static 'img/cfafrica-logo.png' %}" style="max-height:80px;max-width:100%;">
+                    </div>
+                    <div class="callout with-icon column-third">
+                        <img src="{% static 'img/icfj-logo.png' %}" style="max-height:80px;max-width:100%;">
+                    </div>
+                    <div class="callout with-icon column-third">
+                        <img src="{% static 'img/mma.png' %}" style="max-height:40px;max-width:100%;">
+                    </div>
+                </section>
+            </article>
+        </div>
 
         <footer id="page-footer">
             <section class="wrapper footer-container clearfix">
@@ -134,18 +184,22 @@
                 </div>
                 <div class="column-quarter">
                     <ul class="ul-icon-list">
+                        {% block footer_branding %}
                         <li>
                             <a href="http://www.mediamonitoringafrica.org/"><img class="mma-logo" src="{% static 'img/mma.png' %}"></a>
                         </li>
                         <li>
                             <a href="http://www.code4sa.org/"><img src="{% static 'img/code4sa-logo-small.png' %}"></a>
                         </li>
+                        {% endblock %}
                     </ul>
                 </div>
                 {% endblock footer_content %}
             </section>
         </footer>
         {% endblock body %}
+
+        {% include 'settings_js.html' %}
 
         {% block body_javascript %}
         <!--[if gte IE 9]><!-->
@@ -165,7 +219,6 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.1/jquery.xdomainrequest.min.js"></script>
         <![endif]-->
 
-        <script src="{% static 'js/settings.js' %}"></script>
         <script src="{% static 'js/app.js' %}"></script>
         <script src="{% static 'js/glossary.js' %}"></script>
         <script src="{% static 'js/widget.geo.select.js' %}"></script>

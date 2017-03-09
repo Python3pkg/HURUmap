@@ -29,7 +29,7 @@ install_requires = [
 ]
 
 setup(
-    name='wazimap',
+    name='hurumap',
 
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
@@ -40,11 +40,11 @@ setup(
     long_description=long_description,
 
     # The project's main homepage.
-    url='https://github.com/Code4SA/wazimap',
+    url='https://github.com/CodeForAfrica/HURUmap',
 
     # Author details
-    author='Code for South Africa',
-    author_email='greg@code4sa.org',
+    author='Code for Africa',
+    author_email='support@codeforafrica.org',
 
     # Choose your license
     license='MIT',

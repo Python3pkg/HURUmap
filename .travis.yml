@@ -4,7 +4,7 @@ python:
 services:
   - postgresql
 env:
-  - DATABASE_URL=postgres://postgres:@localhost:5432/wazimap
+  - DATABASE_URL=postgres://postgres:@localhost:5432/hurumap
 install:
   - python setup.py -q install
 script: python manage.py test

@@ -1,7 +1,7 @@
 {% extends '_base.html' %}{% load humanize partition staticfiles %}
 
-{% block head_title %}{{ block.super }} - Discover the story behind the data{% endblock %}
-{% block head_meta_description %}Wazimap provides useful facts about every place in South Africa. Compare places using tables and maps, download data, and embed charts on your site!{% endblock %}
+{% block head_title %}{{ block.super }}: Making Census Data Easy to Use{% endblock %}
+{% block head_meta_description %}{{ HURUMAP.name }} provides useful facts about places in {{ root_geo.name }}. Compare places using tables and maps, download data, and embed charts on your site!{% endblock %}
 {% block body_id %}homepage{% endblock %}
 
 {% block head_css_extra %}
@@ -13,31 +13,41 @@
 {% endblock %}
 
 {% block content_container %}
+
+{% block place_finder %}
 <div class="content-container clearfix tan-stripe">
     <article id="profile" class="clearfix wrapper">
         <section class="column-full clearfix big-action">
             <h1 class="article-header">Where to?</h1>
 
             <div id="geography-select-wrapper" class="input-wrapper">
-                <input name="geography_select" id="geography-select" type="text" placeholder="Find a place in South Africa..." autocomplete="off" autofocus="on">
+                <input name="geography_select" id="geography-select" type="text" placeholder="Find a place in {{ root_geo.name }}..." autocomplete="off" autofocus="on">
                 <div class="geolocate-only">
                     <span class="or">or</span>
                     <a href="{% url 'locate' %}" class="action-button"><i class="fa fa-location-arrow"></i> Use your current location</a>
                 </div>
                 <div>
                     <span class="or">or</span>
-                    <a class="action-button" href="/profiles/country-ZA/">Browse South Africa</a>
+                    <a class="action-button" href="/profiles/{{ root_geo.geo_level }}-{{root_geo.geo_code }}/">Browse {{ root_geo.name }}</a>
                 </div>
             </div>
         </section>
     </article>
 </div>
+{% endblock %}
 
+{% block homepage_detail %}
 <div class="content-container clearfix">
+    <article id="explore" class="clearfix wrapper">
+        {% include "data/_blocks/_data_query_builder.html" %}
+    </article>
+</div>
+
+<div class="content-container clearfix tan-stripe">
     <article class="wrapper">
         <section class="column-full clearfix">
             <h1 class="article-header">Discover the story behind the data.</h1>
-            <div id="landing-slippy-map"></div>
+            <div id="slippy-map"></div>
         </section>
         <section>
             <div class="column-third callout with-icon">
@@ -65,10 +75,10 @@
     </article>
 </div>
 
-<div class="content-container clearfix tan-stripe">
+<div class="content-container clearfix">
     <article id="examples" class="clearfix wrapper">
         <header class="column-full">
-            <h1 class="article-header">Using HURUmap</h1>
+            <h1 class="article-header">Using {{ HURUMAP.name }}</h1>
         </header>
         <section class="card-container clearfix">
             <h2 class="column-full subhead">Finding places</h2>
@@ -93,27 +103,36 @@
     </article>
 </div>
 
-<div class="content-container clearfix">
+<div class="content-container clearfix tan-stripe">
     <article id="examples" class="clearfix wrapper">
         <header class="column-full">
-            <h1 class="article-header">About Wazimap</h1>
+            <h1 class="article-header">About {{ HURUMAP.name }}</h1>
 
-            <p class="explainer">Wazimap, from the Xhosa word <i>ulwazi</i> for knowledge, is a joint project by <a href="http://www.mediamonitoringafrica.org/" target="_blank">Media Monitoring Africa</a> and <a href="http://www.code4sa.org/" target="_blank">Code for South Africa</a> that provides easy access to <a href="http://www.statssa.gov.za/" target="_blank">South African census</a> and <a href="http://www.elections.org.za/" target="_blank">elections</a> data.</p>
+            <p class="explainer">HURUmap gives journalists access to census data in an easy to use format.</p>
 
-            <p>Read more about <a href="/about">who we are and why we built Wazimap</a>.
+            <p>Read more about <a href="/about">who we are and why we built HURUmap</a>.
 
             <h2 class="column-full subhead">Shoulders of Giants</h2>
-            <p>Wazimap is based on the amazing <a href="http://censusreporter.org/" target="_blank">Census Reporter</a> and is completely open source. You can <a href="https://github.com/Code4SA/censusreporter/">fork Wazimap on Github</a> and build one for your country.</p>
+            <p>HURUmap is based on the amazing <a href="http://censusreporter.org/" target="_blank">Census Reporter</a> and Wazimap. It is completely open source.</p>
 
         </header>
     </article>
 </div>
 {% endblock %}
 
-{% block body_javascript_extra %}{{ block.super }}
+{% endblock %}
+
+{% block body_javascript_extra %}
+{{ block.super }}
+
+{% block homepage_javascripb_libs %}
 <script src="{% static 'js/vendor/leaflet-0.6.4.js' %}"></script>
 <script src="{% static 'js/vendor/topojson.v1.min.js' %}"></script>
 <script src="{% static 'js/vendor/leaflet.label.js' %}"></script>
+<script src="{% static 'js/maps_static.js' %}"></script>
+<script src="{% static 'js/profile_map.js' %}"></script>
+{% endblock %}
+
 <script>
 // show 'use my current location' button
 if (Modernizr.geolocation) {
@@ -122,72 +141,27 @@ if (Modernizr.geolocation) {
 // geoSelect already defined by widget.geo.select.js
 geoSelect.focus()
 
-// draw a map, but only for big displays
-var allowMapDrag = (browserWidth > 480) ? true : false;
-if (allowMapDrag) {
-    var map = L.map('landing-slippy-map', {
-        scrollWheelZoom: false,
-        zoomControl: false,
-        doubleClickZoom: false,
-        boxZoom: false,
-        keyboard: false,
-        dragging: allowMapDrag,
-        touchZoom: allowMapDrag
-    });
+var maps = new ProfileMaps();
+var centre = {% if HURUMAP.map_centre %}{{ HURUMAP.map_centre }}{% else %}null{% endif %};
+var zoom = {% if HURUMAP.map_zoom %}{{ HURUMAP.map_zoom }}{% else %}null{% endif %};
+maps.drawMapForHomepage('{{ geo_data.first_child_level }}', centre, zoom);
 
-    map.setView({lat: -28.4796, lng: 24.698445}, 5);
-
-    if (allowMapDrag) {
-        map.addControl(new L.Control.Zoom({
-            position: 'topright'
-        }));
+//Icon hover actions
+$( ".topic" ).hover(
+    function() {
+        h = $($(this).children()[0]).attr('src')
+        h = h.replace('.', '_over.')
+        $($(this).children()[0]).attr('src', h)
+        $($(this).children()[1]).css('background','#1f9e95')
+    }, function() {
+        h = $($(this).children()[0]).attr('src')
+        h = h.replace('_over.', '.')
+        $($(this).children()[0]).attr('src', h)
+        $($(this).children()[1]).css('background','#084A49')
     }
-
-    // add imagery
-    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
-      subdomains: 'abc',
-      maxZoom: 17
-    }).addTo(map);
-
-    // add province boundaries
-    d3.json("http://mapit.code4sa.org/areas/PR.geojson?generation=1&simplify_tolerance=" + MAPIT_LEVEL_SIMPLIFY['PR'], function(error, geojson) {
-        if (!geojson)
-            return;
-
-        var featureLayer = L.geoJson(geojson, {
-            style: {
-                "clickable": true,
-                "color": "#00d",
-                "fillColor": "#ccc",
-                "weight": 1.0,
-                "opacity": 0.3,
-                "fillOpacity": 0.3,
-            },
-            onEachFeature: function(feature, layer) {
-                var name = feature.properties.name;
-                var code = feature.properties.codes.MDB;
-
-                layer.bindLabel(name, {direction: 'auto'});
-                layer.on('mouseover', function() {
-                    layer.setStyle({
-                        "fillColor": "#66c2a5",
-                        "fillOpacity": 0.7,
-                    });
-                });
-                layer.on('mouseout', function() {
-                    layer.setStyle({
-                        "fillColor": "#ccc",
-                        "fillOpacity": 0.3,
-                    });
-                });
-                layer.on('click', function() {
-                    window.location = '/profiles/province-' + code;
-                });
-            },
-        });
-        map.addLayer(featureLayer);
-    });
-}
+);
 </script>
+<script src="{% static 'js/data.query.builder.js' %}"></script>
+
+
 {% endblock %}
