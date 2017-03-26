@@ -347,6 +347,13 @@ h2.table-title {
 .header-for-columns {
     color: #084A49;
 }
+
+body.data-view {
+    padding-top: 94px;
+}
+body.data-view .header-container {
+    padding-top: 0;
+}
 #data-view-toggles a, #page-footer a {
     font-style: normal;
     color:#fff;
@@ -354,6 +361,7 @@ h2.table-title {
 #data-view-toggles a {
     float:left;
 }
+
 #geography-add {
     height: 40px;
     color: #084A49;
