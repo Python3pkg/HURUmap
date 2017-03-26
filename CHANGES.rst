@@ -1,6 +1,12 @@
 HURUmap Version History
 =======================
 
+0.7.5 (26 March 2017)
+--------------------
+
+* Update Google Analytics
+* Wazimap == 0.7.2
+
 0.7.4 (9 March 2017)
 --------------------
 
