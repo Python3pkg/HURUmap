@@ -13,7 +13,7 @@
             })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
             {% if HURUMAP.ga_tracking_id %}
-            ga('create', '{{ id }}', 'auto');
+            ga('create', '{{ HURUMAP.ga_tracking_id }}', 'auto');
             ga('send', 'pageview');
             {% endif %}
 
