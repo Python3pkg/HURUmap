@@ -111,7 +111,7 @@ class SimpleTable(object):
         self.setup_columns()
 
         if self.total_column and self.total_column not in self.columns:
-            raise ValueError("Total column is not in the column list. Given '%s', column list: %s" % (self.total_column, self.columns.keys()))
+            raise ValueError("Total column is not in the column list. Given '%s', column list: %s" % (self.total_column, list(self.columns.keys())))
 
         DATA_TABLES[self.id] = self
 
@@ -156,7 +156,7 @@ class SimpleTable(object):
                 for row in rows:
                     geo_values = data['%s-%s' % (geo_level, row.geo_code)]
 
-                    for col in self.columns.iterkeys():
+                    for col in self.columns.keys():
                         geo_values['estimate'][col] = getattr(row, col)
                         geo_values['error'][col] = 0
 
@@ -196,9 +196,9 @@ class SimpleTable(object):
                 for f in fields:
                     if f not in self.columns:
                         raise ValueError("Invalid field/column '%s' for table '%s'. Valid columns are: %s" % (
-                            f, self.id, ', '.join(self.columns.keys())))
+                            f, self.id, ', '.join(list(self.columns.keys()))))
             else:
-                fields = self.columns.keys()
+                fields = list(self.columns.keys())
                 if self.total_column:
                     fields.remove(self.total_column)
 
@@ -209,14 +209,14 @@ class SimpleTable(object):
                     recode = {f: recode(f) for f in fields}
 
             # is the total column valid?
-            if isinstance(total, basestring) and total not in self.columns:
+            if isinstance(total, str) and total not in self.columns:
                 raise ValueError("Total column '%s' isn't one of the columns for table '%s'. Valid columns are: %s" % (
-                    total, self.id, ', '.join(self.columns.keys())))
+                    total, self.id, ', '.join(list(self.columns.keys()))))
 
             # table columns to fetch
             cols = [self.model.columns[c] for c in fields]
 
-            if total is not None and isinstance(total, basestring) and total not in cols:
+            if total is not None and isinstance(total, str) and total not in cols:
                 cols.append(total)
 
             # do the query. If this returns no data, row is None
@@ -233,7 +233,7 @@ class SimpleTable(object):
             if total is None:
                 # sum of all columns
                 total = sum(getattr(row, f) or 0 for f in fields)
-            elif isinstance(total, basestring):
+            elif isinstance(total, str):
                 total = getattr(row, total)
 
             # Now build a data dictionary based on the columns in +row+.
@@ -639,7 +639,7 @@ def get_model_from_fields(fields, geo_level, table_name=None, table_dataset=None
     # try find it based on fields
     field_set = set(fields)
 
-    candidates = FIELD_TABLES.values()
+    candidates = list(FIELD_TABLES.values())
     if table_dataset:
         candidates = [t for t in candidates if t.dataset_name == table_dataset]
 

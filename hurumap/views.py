@@ -203,7 +203,7 @@ class DataAPIView(View):
 
         fmt = request.GET.get('format', 'csv')
         if fmt not in mgr.DOWNLOAD_FORMATS:
-            response = HttpResponse('Unspported format %s. Supported formats: %s' % (fmt, ', '.join(mgr.DOWNLOAD_FORMATS.keys())))
+            response = HttpResponse('Unspported format %s. Supported formats: %s' % (fmt, ', '.join(list(mgr.DOWNLOAD_FORMATS.keys()))))
             response.status_code = 400
             return response
 
@@ -253,7 +253,7 @@ class DataAPIView(View):
         data = {}
 
         for table in tables:
-            for geo_id, table_data in table.raw_data_for_geos(geos).iteritems():
+            for geo_id, table_data in table.raw_data_for_geos(geos).items():
                 data.setdefault(geo_id, {})[table.id.upper()] = table_data
 
         return data
@@ -264,7 +264,7 @@ class TableAPIView(View):
     View that lists data tables.
     """
     def get(self, request, *args, **kwargs):
-        return render_json_to_response([t.as_dict(columns=False) for t in DATA_TABLES.itervalues()])
+        return render_json_to_response([t.as_dict(columns=False) for t in DATA_TABLES.values()])
 
 
 class AboutView(TemplateView):
